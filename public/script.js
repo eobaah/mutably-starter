@@ -7,9 +7,21 @@ $(document).ready(function(){
   // Get All Albums On Load
   getAllAlbums();
 
-  $(document).on('click', '.get-albums-btn', function() {
-
+  $('.get-albums-btn').click( function (event)  {
+    getAllAlbums();
   })
+
+  $(document).on('click', '.edit-btn', function()  {
+    let id = this.parentElement.getAttribute("data-id")
+    console.log(id)
+  })
+
+  $(document).on('click', '.delete-btn', function() {
+    alert("Pressed Delete Button")
+  })
+
+
+
 
   // $(document).on('click', '.save-btn', function() {
   //
@@ -52,12 +64,14 @@ const getAllAlbums = () => {
   .then( albums => {
     albums = albums.albums
     albums.forEach( album => {
-      console.log(album)
       $(".list-group")
-        .append(`<li class="list-group-item" data-id="${album._id}">${JSON.stringify(album.name)}
-                 <i class="fa fa-trash-o" aria-hidden="true"></i>
-                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>`);
-
+        .append(`
+        <li class="list-group-item" data-id="${album._id}"
+        data-toggle="modal" data-target="#exampleModal">
+        ${JSON.stringify(album.name)}
+         <i class="fa fa-trash-o" aria-hidden="true"></i>
+         <a class="edit-btn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+         `);
     })
   } )
   .catch(err => console.log(err) )
