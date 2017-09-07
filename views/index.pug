@@ -1,21 +1,6 @@
 extends layout
 
-block content
-  #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
-  .modal-dialog(role='document')
-    .modal-content
-      .modal-header
-        h5#exampleModalLabel.modal-title Modal title
-        button.close(type='button', data-dismiss='modal', aria-label='Close')
-          span(aria-hidden='true') ×
-      .modal-body
-        | ...
-      .modal-footer
-        button.btn.btn-secondary(type='button', data-dismiss='modal') Close
-        button.btn.btn-primary(type='button') Save changes
-
-  
-  
+block content      
   .col-sm-8.col-sm-offset-2
     nav.navbar.navbar-default
       a.navbar-brand(href='/') Mutably Front-end For Fodé  and Gene
@@ -25,5 +10,32 @@ block content
       .panel-heading Music Albums
       ul.list-group
         // your resource items here
+        #myModal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+        .modal-dialog(role='document')
+          .modal-content
+            .modal-header
+              h5#exampleModalLabel.modal-title
+              button.close(type='button', data-dismiss='modal', aria-label='Close')
+                span(aria-hidden='true') ×
+            .modal-body
+              label 
+                | Artist: 
+                input(type="artist" name="artist" value="")
+              label
+                | Name: 
+                input(type="name" name="name" value="")
+              label
+                | Date: 
+                input(type="text" name="date" value="")
+              label
+                | Version: 
+                input(type="version" name="version" value="")
+              label
+                | Genre:  
+                input(type="genre" name="genre" value="")
+            .modal-footer
+              button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+              button.btn.btn-primary(type='button') Save changes
+  
   script(src='https://code.jquery.com/jquery-3.2.1.js')
   script(src='/script.js')
