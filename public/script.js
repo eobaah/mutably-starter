@@ -1,4 +1,4 @@
-const url = 'http://mutably.herokuapp.com/albums'
+const url = 'http://mutably.herokuapp.com/albums/'
 const getAlbums = document.querySelector('.get-albums-btn')
 const listGroup = document.querySelector('.list-group')
 
@@ -19,37 +19,29 @@ $(document).ready(function(){
     let version = $(this.parentElement).data("version")
     let genres = $(this.parentElement).data("genres")
 
-    $(".modal-title").html(`<h1>${id}</h1>`)
+    $(".modal-title").html(`<h2>${id}</h2>`)
     $("input[name=artist]").val(artist)
     $("input[name=name]").val(name)
     $("input[name=date]").val(releaseDate)
     $("input[name=version]").val(version)
     $("input[name=genre]").val(genres)
+
+    $('.modal-content').addClass( 'modal-show');
+  })
+
+  $(document).on('click', '.close-btn', function() {
+  })
+
+  $(document).on('click', '.save-changes-btn', function() {
+    event.preventDefault()
+    updateAlbum()
+    $('.modal-content').removeClass('modal-show');
+    getAllAlbums();
   })
 
   $(document).on('click', '.delete-btn', function() {
     alert("Pressed Delete Button")
   })
-
-
-
-
-  // $(document).on('click', '.save-btn', function() {
-  //
-  //   })
-  //
-  // $(document).on('click', '.edit-btn', function() {
-  //
-  //   })
-  //
-  // $(document).on('click', '.delete-btn', function() {
-  //     $.ajax({
-  //       method: 'DELETE',
-  //       url: url + id,
-  //       success: deleteAlbum
-  //     })
-  //   })
-
 });
 
 const checkStatus = response =>  {
@@ -87,20 +79,49 @@ const getAllAlbums = () => {
           >
         ${JSON.stringify(album.name)}
          <i class="fa fa-trash-o" aria-hidden="true"></i>
-         <a class="edit-btn" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+         <a class="edit-btn" data-toggle="modal" data-target="#musicModal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
         </li>
          `);
     })
-  } )
+  })
   .catch(err => console.log(err) )
 }
 
-// const addAlbum = (id, artist, name, date, version, genres) => {
+const updateAlbum = () => {
+  let id = document.querySelector('.modal-title').childNodes[0].childNodes[0].nodeValue
+  id = id.substring(1, id.length-1)
+  let nodePath = document.querySelector('.modal-body').childNodes
+  let artist = nodePath[0].childNodes[1].value
+  let name = nodePath[1].childNodes[1].value
+  let releaseDate = nodePath[2].childNodes[1].value
+  let version = nodePath[3].childNodes[1].value
+  let genres = nodePath[4].childNodes[1].value
+
+  fetch(url + id, {
+
+    method: 'PUT',
+    mode: 'cors',
+    headers: new Headers({
+		'Content-Type': 'application/json'
+    }),
+    body: {
+      artistName: artist,
+      name: name,
+      releaseDate: releaseDate,
+      __v: version,
+      genres: genres
+    }
+  })
+    // .then(checkStatus)
+    .catch(err => console.log(err) )
+}
+
+// const updateAlbum = (id, artist, name, date, version, genres) => {
 //   $.ajax({
-//     url: url,
-//     method: 'POST',
-//     data: {
-//       _id: id,
+//     id: id
+//     url: url + idea,
+//     method: 'PUT',
+//     body: {
 //       artistName: artist,
 //       name: name,
 //       releaseDate: date,
@@ -108,15 +129,7 @@ const getAllAlbums = () => {
 //       genres: genres
 //     }
 //   }).done( data => {
-//     $(".class-name").append(data);
+//     console.log(data);
 //   })
-//
-// }
-//
-// const updateAlbum = id => {
-//
-// }
-//
-// const deleteAlbum = id => {
 //
 // }

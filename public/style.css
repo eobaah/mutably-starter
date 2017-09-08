@@ -16,6 +16,10 @@ i.fa.fa-pencil-square-o:hover {
   color: blue;
 }
 
+.modal-content {
+  display: none;
+}
+
 .modal-body {
   display: flex;
   flex-direction: column;
@@ -30,4 +34,8 @@ i.fa.fa-pencil-square-o:hover {
 .modal-body input{
   align-self: flex-end;
   width: 80%;
+}
+
+.modal-show {
+  display: block;
 }

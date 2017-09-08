@@ -4,17 +4,17 @@ block content
   .col-sm-8.col-sm-offset-2
     nav.navbar.navbar-default
       a.navbar-brand(href='/') Mutably Front-end For Fodé  and Gene
-    i.get-albums-btn.fa.fa-refresh(aria-hidden="true")    
+    i.get-albums-btn.fa.fa-refresh(aria-hidden="true")  
       | Refresh
     .panel.panel-default
       .panel-heading Music Albums
       ul.list-group
         // your resource items here
-        #myModal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+        #musicModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
         .modal-dialog(role='document')
           .modal-content
             .modal-header
-              h5#exampleModalLabel.modal-title
+              h5#musicModalLabel.modal-title
               button.close(type='button', data-dismiss='modal', aria-label='Close')
                 span(aria-hidden='true') ×
             .modal-body
@@ -34,8 +34,8 @@ block content
                 | Genre:  
                 input(type="genre" name="genre" value="")
             .modal-footer
-              button.btn.btn-secondary(type='button', data-dismiss='modal') Close
-              button.btn.btn-primary(type='button') Save changes
+              button.btn.btn-secondary.close-btn(type='button', data-dismiss='modal') Close
+              button.btn.btn-primary.save-changes-btn(type='button') Update changes
   
   script(src='https://code.jquery.com/jquery-3.2.1.js')
   script(src='/script.js')
