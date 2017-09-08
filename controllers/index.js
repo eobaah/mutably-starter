@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router();
 
 router.get('/home', (request, response) => {
-  console.log("ehadsfwewe")
+
   response.render('index')
 })
 router.get('/albums', (request, response) => {

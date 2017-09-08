@@ -33,9 +33,11 @@ $(document).ready(function(){
   })
 
   $(document).on('click', '.save-changes-btn', function() {
-    event.preventDefault()
-    updateAlbum()
+    var id = $(this).data("id")
+
+    updateAlbum(id);
     $('.modal-content').removeClass('modal-show');
+    // clearAlbums();
     getAllAlbums();
   })
 
@@ -87,8 +89,15 @@ const getAllAlbums = () => {
   .catch(err => console.log(err) )
 }
 
-const updateAlbum = () => {
-  let id = document.querySelector('.modal-title').childNodes[0].childNodes[0].nodeValue
+const clearAlbums = () => {
+  let modalItems = document.querySelector('.modal-body')
+  while (modalItems.firstChild) {
+    modalItems.removeChild(modalItems.firstChild);
+  }
+}
+
+const updateAlbum = (id) => {
+  id = document.querySelector('.modal-title').childNodes[0].childNodes[0].nodeValue
   id = id.substring(1, id.length-1)
   let nodePath = document.querySelector('.modal-body').childNodes
   let artist = nodePath[0].childNodes[1].value
@@ -97,39 +106,23 @@ const updateAlbum = () => {
   let version = nodePath[3].childNodes[1].value
   let genres = nodePath[4].childNodes[1].value
 
-  fetch(url + id, {
+  console.log('url + id ----> ', url + id)
 
+  fetch(url + id, {
     method: 'PUT',
     mode: 'cors',
     headers: new Headers({
-		'Content-Type': 'application/json'
+      'Accept': 'application/json',
+  		'Content-Type': 'application/json'
     }),
-    body: {
+    body: JSON.stringify({
+      _id: id,
       artistName: artist,
       name: name,
       releaseDate: releaseDate,
       __v: version,
       genres: genres
-    }
-  })
-    // .then(checkStatus)
+    })
+  }).then(checkStatus)
     .catch(err => console.log(err) )
 }
-
-// const updateAlbum = (id, artist, name, date, version, genres) => {
-//   $.ajax({
-//     id: id
-//     url: url + idea,
-//     method: 'PUT',
-//     body: {
-//       artistName: artist,
-//       name: name,
-//       releaseDate: date,
-//       __v: version,
-//       genres: genres
-//     }
-//   }).done( data => {
-//     console.log(data);
-//   })
-//
-// }
