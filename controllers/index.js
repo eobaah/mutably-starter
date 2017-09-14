@@ -2,11 +2,10 @@ const express = require('express')
 const router = express.Router();
 
 router.get('/home', (request, response) => {
-
   response.render('index')
 })
-router.get('/albums', (request, response) => {
 
+router.get('/albums', (request, response) => {
   response.render('index')
 })
 

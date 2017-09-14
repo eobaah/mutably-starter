@@ -11,6 +11,55 @@ $(document).ready(function(){
     getAllAlbums();
   })
 
+  var ELEMENTS = {
+    modalContent: function () { return $('.modal-content')},
+    editButtons: function() { return $('.edit-btn')},
+    albumEditForm: function() { return $('.')}
+  }
+
+  function extractAlbumFromEditForm() {
+
+  }
+
+  var CONTROLLER = {
+    updateAlbum: function(event) {
+      // call the function to extract the form data
+      // delegate that to the DATA function
+      // delegate to the UI function
+      var updatedAlbum = extractAlbumFromEditForm()
+      DATA.updatedAlbum(updatedAlbum)
+      .then(function(response) {
+        UI.updateAlbum()
+      })
+    },
+    addAlbum: function() {},
+    deleteAlbum: function() {}
+  }
+
+  var UI = {
+    updateAlbum: function(album) { /* DOM manipulation */},
+    addAlbum: function(album) {},
+    deleteAlbum: function() {}
+  }
+
+  var DATA = {
+    fetchAlbums: function() {},
+    updateAlbum: function(album) {
+      return fetch('/albums', {method: 'PUT', body: JSON.stringify(album)})
+      .then()
+    }
+  }
+
+/*
+  0. add a click handler to the update button
+  1. Extract data from the form
+  2. Pass the data to my DATA function, and make an API call to update the data
+  3. On success, update the UI
+*/
+
+$(document).on('click', '.save-changes-btn', CONTROLLER.updateAlbum)
+
+
   $(document).on('click', '.edit-btn', function()  {
     let id = $(this.parentElement).data("id")
     let artist = $(this.parentElement).data("artist")
@@ -26,7 +75,7 @@ $(document).ready(function(){
     $("input[name=version]").val(version)
     $("input[name=genre]").val(genres)
 
-    $('.modal-content').addClass( 'modal-show');
+    ELEMENTS.modalContent.addClass( 'modal-show');
   })
 
   $(document).on('click', '.close-btn', function() {
@@ -34,10 +83,8 @@ $(document).ready(function(){
 
   $(document).on('click', '.save-changes-btn', function() {
     let id = $(this).data("id")
-
     updateAlbum(id);
     $('.modal-content').removeClass('modal-show');
-    // clearAlbums();
     getAllAlbums();
   })
 
