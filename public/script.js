@@ -33,7 +33,7 @@ $(document).ready(function(){
   })
 
   $(document).on('click', '.save-changes-btn', function() {
-    var id = $(this).data("id")
+    let id = $(this).data("id")
 
     updateAlbum(id);
     $('.modal-content').removeClass('modal-show');
@@ -78,7 +78,7 @@ const getAllAlbums = () => {
           data-release="${album.releaseDate}"
           data-version="${album.__v}"
           data-genres="${album.genres}"
-          >
+        >
         ${JSON.stringify(album.name)}
          <i class="fa fa-trash-o" aria-hidden="true"></i>
          <a class="edit-btn" data-toggle="modal" data-target="#musicModal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
@@ -97,8 +97,9 @@ const clearAlbums = () => {
 }
 
 const updateAlbum = (id) => {
-  id = document.querySelector('.modal-title').childNodes[0].childNodes[0].nodeValue
-  id = id.substring(1, id.length-1)
+  // let albumId = document.querySelector('.modal-title').childNodes[0].childNodes[0].nodeValue
+  // albumId = albumId.substring(1, albumId.length-1)
+  let albumId = id
   let nodePath = document.querySelector('.modal-body').childNodes
   let artist = nodePath[0].childNodes[1].value
   let name = nodePath[1].childNodes[1].value
@@ -106,7 +107,7 @@ const updateAlbum = (id) => {
   let version = nodePath[3].childNodes[1].value
   let genres = nodePath[4].childNodes[1].value
 
-  console.log('url + id ----> ', url + id)
+  console.log('url + albumId ----> ', url + id)
 
   fetch(url + id, {
     method: 'PUT',
@@ -116,7 +117,7 @@ const updateAlbum = (id) => {
   		'Content-Type': 'application/json'
     }),
     body: JSON.stringify({
-      _id: id,
+      _id: albumId,
       artistName: artist,
       name: name,
       releaseDate: releaseDate,
